@@ -17,7 +17,7 @@ love.draw = function ()
 
   -- drawing start from the upper left corner of the sprite which means we need to chnage the offset to the center of the sprite
   -- for rotation change the degree to radian <=> r * pi/180
-  love.graphics.draw(sprites.player,player.x,player.y, math.pi/2,nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
+  love.graphics.draw(sprites.player,player.x,player.y, playerMouseAngle(),nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
 end
 
 love.update = function (dt)
@@ -25,4 +25,8 @@ love.update = function (dt)
   if love.keyboard.isDown("d") then
     player.x = player.x + player.speed * dt
   end
+end
+
+playerMouseAngle = function ()
+  return math.atan2(player.y - love.mouse.getY(),player.x - love.mouse.getX()) + math.pi
 end
