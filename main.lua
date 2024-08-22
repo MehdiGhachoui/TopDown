@@ -2,7 +2,8 @@ local sprites = {}
 local player = {}
 local zombies = {}
 local bullets = {}
-
+local game_state = 2
+local spawn_timer = 2
 love.load = function ()
   sprites.background = love.graphics.newImage("sprites/background.png")
   sprites.bullet = love.graphics.newImage("sprites/bullet.png")
@@ -12,6 +13,9 @@ love.load = function ()
   player.x = love.graphics.getWidth()/2
   player.y = love.graphics.getHeight()/2
   player.speed = 180 -- <=> moving 3px by frame
+
+  -- game_state = 2
+  -- spawn_timer = 5
 end
 
 love.update = function (dt)
@@ -69,6 +73,14 @@ love.update = function (dt)
   for i = #bullets, 1, -1 do
     if bullets[i].dead == true then
       table.remove(bullets,i)
+    end
+  end
+
+  if game_state == 2 then
+    spawn_timer = spawn_timer - dt
+    if spawn_timer <= 0 then
+      spawnZombie()
+      spawn_timer = 2
     end
   end
 end
